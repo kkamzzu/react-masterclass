@@ -281,3 +281,69 @@ function App() {
 
 export default App;
 ```
+
+# Themes
+
+<!-- dark/ light mode를 가지고 싶다면 property 들의 이름이 똑같아야함. -->
+
+<!-- App.js -->
+```js
+import styled from "styled-components";
+// Theme: 모든 색깔을 하나의 object 안에 넣어놓음
+
+const Title = styled.h1`
+  color: ${(props) => props.theme.textColor};
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw ;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.backgroundColor};
+`
+
+
+function App() {
+  return  (
+    <Wrapper>
+        <Title>Hello</Title>
+    </Wrapper>
+  ) 
+}
+
+export default App;
+```
+
+<!-- index.js -->
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { ThemeProvider } from 'styled-components';
+
+const darkTheme = {
+  textColor:"whitesmoke",
+  backgroundColor:"#111"
+}
+
+const lightTheme = {
+  textColor:"#111",
+  backgroundColor:"#whitesomke"
+}
+
+ReactDOM.render (
+  <React.StrictMode>
+    <ThemeProvider theme={darkTheme}>
+    <App />
+    </ThemeProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+```
+
+# TypeScript
+
+- javascript를 기반으로 한 프로그래밍 언어.
+- stongly-typed 언어 : 프로그래밍 언어가 작동하기 전에 `type` 을 확인한다는 것.
