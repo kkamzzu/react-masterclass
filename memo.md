@@ -70,3 +70,214 @@ function App() {
 
 export default App;
 ```
+
+# AS
+```js
+import styled from "styled-components";
+
+const Father = styled.div`
+  display: flex;
+`;
+// html tag 사용하기 시러 -> as
+const Btn = styled.button`
+  color: #fff;
+  background-color: tomato;
+  border: 0;
+  border-radius: 15px;
+`
+
+function App() {
+  return (
+    <Father as="header">
+          {/* props */}
+          <Btn>Log in</Btn>
+          <Btn as="a" href="/">Log in</Btn>
+
+    </Father>
+  ) 
+}
+
+export default App;
+```
+
+# Attrs
+
+```js
+import styled from "styled-components";
+
+const Father = styled.div`
+  display: flex;
+`;
+// styled components를 이용한 트릭
+                            //input으로 전달될 모든 속성을 가진 오브젝트를 담을 수 있음
+                            //하나씩 다 적지 않아도 돼서 편리함.
+const Input = styled.input.attrs({require:true, minLength:10})`
+  background-color:tomato`;
+
+
+function App() {
+  return (
+    <Father as="header">
+          {/* props */}
+          <Input />
+          <Input />
+          <Input />
+          <Input />
+          <Input />
+    </Father>
+  ) 
+}
+
+export default App;
+```
+
+# animaion 
+
+```js
+import styled, {keyframes} from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+`
+const roattionAnimation = keyframes`
+ from {
+    transform: rotate(0deg);
+    border-radius: 0px;
+ }
+ to {
+    transform: rotate(360deg);
+    border-radius: 100px;
+ }
+`;
+
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  background-color: tomato;
+  animation: ${roattionAnimation} 3s linear infinite;
+`
+
+function App() {
+  return (
+    <Wrapper>
+      <Box />
+    </Wrapper>
+  ) 
+}
+
+export default App;
+```
+
+# Animations and Pseudo Selectors 
+
+```js
+import styled, {keyframes} from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+`
+const roattionAnimation = keyframes`
+ 0% {
+    transform: rotate(0deg);
+    border-radius: 0px;
+ }
+ 50% {
+    transform: rotate(360deg);
+    border-radius: 100px;
+ }
+ 100% {
+    transform: rotate(0deg);
+    border-radius: 0px;
+ }
+`;
+
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  background-color: tomato;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${roattionAnimation} 3s linear infinite;
+  /* 다른 것들도 component styles안에 넣을 수 있음. */
+  /* 꼭 모든 component에 styled component를 처리 할 필요는 없음 */
+  span {
+    font-size: 36px;
+    /* span안에 hover */
+    &:hover {
+      font-size: 80px;
+    }
+    &:active {
+      opacity: 0;
+    }
+  }
+`
+
+function App() {
+  return (
+    <Wrapper>
+      <Box>
+        <span>🥑</span>
+      </Box>
+    </Wrapper>
+  ) 
+}
+
+export default App;
+```
+
+# Pseudo Selectors part Two
+```js
+import styled, {keyframes} from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw ;
+  justify-content: center;
+  align-items: center;
+`
+const roattionAnimation = keyframes`
+ 0% {
+    transform: rotate(0deg);
+    border-radius: 0px;
+ }
+ 50% {
+    transform: rotate(360deg);
+    border-radius: 100px;
+ }
+ 100% {
+    transform: rotate(0deg);
+    border-radius: 0px;
+ }
+`;
+const Emoji = styled.span`
+  font-size: 36px;
+  `
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  background-color: tomato;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${roattionAnimation} 3s linear infinite;
+  ${Emoji} :hover {
+      font-size: 98px;
+    }
+`;
+
+function App() {
+  return  (
+    <Wrapper>
+      <Box>
+        <Emoji as="p">🥑</Emoji>
+      </Box>
+      {/* 박스 바깥이라 아무일도 일어나지 않음 */}
+      <Emoji as="p">❤️</Emoji>
+    </Wrapper>
+  ) 
+}
+
+export default App;
+```
